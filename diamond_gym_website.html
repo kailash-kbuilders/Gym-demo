@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#080808">
+<title>Diamond Gym | Barmer, Rajasthan</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap');
+:root{--red:#e51b23;--red-glow:rgba(229,27,35,0.4);--bg:#080808;--panel:#111;--line:#272727;--muted:#999;--white:#f6f6f6;--wa:#25D366}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{width:100%;max-width:100%;overflow-x:hidden;background:var(--bg);color:var(--white);font-family:Inter,Arial,sans-serif}
+a{text-decoration:none;color:inherit}
+button{font:inherit;background:none;border:none;cursor:pointer}
+
+.nav{position:fixed;z-index:100;top:0;left:0;width:100%;padding:14px 5%;display:flex;align-items:center;justify-content:space-between;transition:all .4s cubic-bezier(0.16,1,0.3,1);background:rgba(8,8,8,.85);backdrop-filter:blur(10px)}
+.nav.scrolled{background:rgba(8,8,8,.96);backdrop-filter:blur(16px);border-bottom:1px solid #222;padding:10px 5%;box-shadow:0 10px 30px rgba(0,0,0,0.8)}
+.logo{display:flex;align-items:center;gap:12px;font:900 26px "Barlow Condensed";letter-spacing:.5px;white-space:nowrap;transition:transform .3s ease}
+.logo:hover{transform:scale(1.02)}
+.logo b{color:var(--red)}
+
+.links{display:flex;align-items:center;gap:25px;font-size:11px;font-weight:800;letter-spacing:1px}
+.links a{position:relative;padding:5px 0;transition:color .3s ease}
+.links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--red);transition:width .3s ease}
+.links a:hover{color:var(--red)}
+.links a:hover::after{width:100%}
+
+.nav-cta,.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:12px 20px;border:1px solid var(--red);background:var(--red);color:#fff;font-size:11px;font-weight:800;letter-spacing:.7px;transition:all .3s cubic-bezier(0.16,1,0.3,1);border-radius:4px;position:relative;overflow:hidden}
+.btn::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.25),transparent);transition:left .6s ease}
+.btn:hover::before{left:100%}
+.btn:hover,.nav-cta:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(229,27,35,0.45)}
+.btn.alt{background:transparent;border-color:#555}
+.btn.alt:hover{border-color:var(--red);color:#fff}
+.btn.wa-btn{background:#25D366;border-color:#25D366;color:#fff}
+.btn.wa-btn:hover{box-shadow:0 12px 28px rgba(37,211,102,0.4)}
+
+.menu-toggle{display:none;flex-direction:column;justify-content:center;align-items:center;width:44px;height:44px;border-radius:6px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);cursor:pointer;z-index:110;transition:background .3s ease}
+.menu-toggle:hover{background:rgba(229,27,35,0.2);border-color:var(--red)}
+.hamburger{width:22px;height:16px;position:relative;display:flex;flex-direction:column;justify-content:space-between}
+.hamburger span{display:block;height:2.5px;width:100%;background:#fff;border-radius:2px;transition:all .4s cubic-bezier(0.68, -0.6, 0.32, 1.6)}
+.menu-toggle.active .hamburger span:nth-child(1){transform:translateY(6.75px) rotate(45deg);background:var(--red)}
+.menu-toggle.active .hamburger span:nth-child(2){opacity:0;transform:scaleX(0)}
+.menu-toggle.active .hamburger span:nth-child(3){transform:translateY(-6.75px) rotate(-45deg);background:var(--red)}
+
+.hero{min-height:92vh;display:flex;align-items:flex-end;position:relative;overflow:hidden;background:
+linear-gradient(180deg, rgba(8,8,8,0.7) 0%, rgba(8,8,8,0.92) 70%, #080808 100%),
+url('https://cdn.phototourl.com/member/2026-10-09-5d7fb844-5d00-4a1d-8801-64a2a25cae06.jpg') center/cover no-repeat}
+.hero::after{content:"";position:absolute;right:-12%;top:15%;width:55vw;height:55vw;border:1px solid #e51b234d;border-radius:50%;box-shadow:0 0 0 50px #e51b2308,0 0 0 100px #e51b2305;animation:pulse 5s ease-in-out infinite;pointer-events:none}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:.5}50%{transform:scale(1.06);opacity:.85}}
+.hero-inner{width:min(1120px,90%);margin:auto;padding:150px 0 75px;position:relative;z-index:2}
+.kicker,.eyebrow{color:#ff4b50;font-size:11px;font-weight:800;letter-spacing:2.5px;margin-bottom:14px;display:inline-block;padding:4px 10px;background:rgba(229,27,35,0.1);border-left:3px solid var(--red);border-radius:0 4px 4px 0}
+h1,h2,h3{font-family:"Barlow Condensed",Impact,sans-serif;text-transform:uppercase}
+h1{font-size:clamp(60px,10vw,135px);line-height:.8;letter-spacing:-1px;max-width:800px;text-shadow:0 4px 20px rgba(0,0,0,0.9)}
+h1 span,.red{color:var(--red)}
+.hero p{max-width:530px;color:#d0d0d0;line-height:1.7;font-size:15px;margin:25px 0;text-shadow:0 2px 8px rgba(0,0,0,0.9)}
+.actions{display:flex;gap:12px;flex-wrap:wrap}
+.trust{display:flex;align-items:center;gap:12px;margin-top:30px;font-size:11px;color:#aaa}.stars{color:#ffd21c;letter-spacing:2px;font-size:16px}
+.scroll{position:absolute;bottom:25px;right:5%;z-index:2;color:#777;font-size:9px;letter-spacing:2px;animation:bounce 2s infinite}
+@keyframes bounce{0%,20%,50%,80%,100%{transform:translateY(0)}40%{transform:translateY(-8px)}60%{transform:translateY(-4px)}}
+
+.ticker{border-top:1px solid #222;border-bottom:1px solid #222;background:#0d0d0d;padding:15px 0;overflow:hidden;white-space:nowrap}
+.ticker-track{display:inline-flex;gap:26px;animation:marquee 18s linear infinite}
+.ticker b{font:700 18px "Barlow Condensed";letter-spacing:1px}.ticker i{color:var(--red);font-style:normal}
+@keyframes marquee{to{transform:translateX(-50%)}}
+
+section{width:min(1120px,90%);margin:auto;padding:78px 0}
+.title{font-size:clamp(48px,7vw,82px);line-height:.86;margin-bottom:20px}
+.muted{color:#999;line-height:1.75;font-size:14px;max-width:600px}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:55px;align-items:center}
+.visual{min-height:420px;border:1px solid #2b2b2b;border-radius:12px;background:
+linear-gradient(to top, rgba(8,8,8,0.95) 0%, rgba(8,8,8,0.2) 60%),
+url('https://cdn.phototourl.com/member/2026-10-09-5d7fb844-5d00-4a1d-8801-64a2a25cae06.jpg') center/cover no-repeat;
+position:relative;overflow:hidden;box-shadow:0 20px 40px rgba(0,0,0,0.6);transition:transform .4s ease}
+.visual:hover{transform:scale(1.02)}
+.visual::before{content:"";position:absolute;width:230px;height:230px;border:32px solid #e51b2320;border-radius:50%;right:-40px;top:-40px}
+.visual::after{content:"FITNESS";position:absolute;bottom:20px;left:25px;font:900 80px "Barlow Condensed";color:#ffffff12;letter-spacing:2px;pointer-events:none}
+.visual-text{position:absolute;left:28px;top:28px;z-index:2}
+.visual-text strong{display:block;font:800 52px "Barlow Condensed";line-height:.85}.visual-text span{color:var(--red);font-size:12px;font-weight:800;letter-spacing:2px}
+
+.features{display:grid;grid-template-columns:1fr 1fr;border:1px solid #292929;margin-top:28px;border-radius:8px;overflow:hidden}
+.feature{padding:19px;background:#0d0d0d;border:1px solid #191919;transition:background .3s ease}.feature:hover{background:#151515}
+.feature strong{display:block;font:700 21px "Barlow Condensed"}.feature small{color:#777;font-size:10px}
+
+.training{width:100%;background:#0d0d0d;border-top:1px solid #191919;border-bottom:1px solid #191919}
+.training-inner{width:min(1120px,90%);margin:auto;padding:78px 0}
+.cards{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:35px}
+.card{min-height:300px;padding:22px;border-radius:10px;border:1px solid #292929;display:flex;flex-direction:column;justify-content:flex-end;position:relative;overflow:hidden;transition:all .4s cubic-bezier(0.16,1,0.3,1);background-size:cover;background-position:center}
+.card-overlay{position:absolute;inset:0;background:linear-gradient(to top, rgba(8,8,8,0.95) 15%, rgba(8,8,8,0.4) 60%, rgba(8,8,8,0.2) 100%);transition:.35s ease;z-index:1}
+.card:hover{transform:translateY(-10px);border-color:var(--red);box-shadow:0 15px 35px rgba(229,27,35,0.3)}
+.card:hover .card-overlay{background:linear-gradient(to top, rgba(229,27,35,0.88) 0%, rgba(8,8,8,0.65) 100%)}
+.card-content{position:relative;z-index:2;transition:transform .3s ease}
+.card:hover .card-content{transform:translateY(-4px)}
+.num{color:var(--red);font-size:12px;font-weight:800;letter-spacing:1px;transition:color .3s ease}.card:hover .num{color:#fff}
+.card h3{font-size:28px;margin:6px 0 4px;letter-spacing:0.5px}.card p{color:#ccc;font-size:12px;line-height:1.4}
+
+.gallery-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:30px}
+.gallery-item{height:220px;border-radius:10px;overflow:hidden;border:1px solid #222;position:relative;box-shadow:0 8px 20px rgba(0,0,0,0.5)}
+.gallery-item img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(0.16,1,0.3,1), filter .6s ease;filter:brightness(0.85)}
+.gallery-item:hover img{transform:scale(1.1);filter:brightness(1.05)}
+.gallery-item span{position:absolute;bottom:12px;left:14px;font:700 16px "Barlow Condensed";background:rgba(8,8,8,0.85);padding:5px 12px;border-radius:4px;border-left:3px solid var(--red);letter-spacing:1px;backdrop-filter:blur(4px)}
+
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:#292929;margin-top:35px;border:1px solid #292929;border-radius:8px;overflow:hidden}
+.stat{background:#0d0d0d;padding:28px;transition:background .3s ease}.stat:hover{background:#131313}
+.stat strong{font:800 51px "Barlow Condensed";color:#fff}.stat p{color:#777;text-transform:uppercase;font-size:9px;letter-spacing:1px;margin-top:5px}
+
+.review-box{background:linear-gradient(135deg,#151515,#0d0d0d);border:1px solid #2a2a2a;padding:45px;text-align:center;position:relative;overflow:hidden;border-radius:12px}
+.review-box::after{content:"★★★★★";position:absolute;font-size:130px;color:#ffffff03;right:-20px;bottom:-35px;pointer-events:none}
+.rating{font:900 92px "Barlow Condensed";line-height:.8}.review-box p{max-width:650px;margin:18px auto 0;color:#aaa;line-height:1.7;font-size:13px}
+
+.location{display:grid;grid-template-columns:1fr 1.15fr;gap:35px;align-items:stretch}
+.address{color:#999;line-height:1.8;margin:20px 0;font-size:13px}
+.map-wrap{min-height:360px;border:1px solid #292929;background:#111;overflow:hidden;border-radius:12px;position:relative;box-shadow:0 15px 35px rgba(0,0,0,0.5)}
+.map-wrap iframe{display:block;width:100%;height:100%;min-height:360px;border:0;filter:grayscale(.15) contrast(1.05)}
+
+.cta{width:100%;text-align:center;padding:95px 5%;background:linear-gradient(120deg,#10090a,#0b0b0b,#180506);border-top:1px solid #2a1718}
+.cta h2{font-size:clamp(65px,10vw,125px);line-height:.8}.cta p{color:#999;margin:22px auto;max-width:440px;font-size:13px}
+
+footer{border-top:1px solid #222;padding:35px 5%;display:flex;justify-content:space-between;align-items:center;gap:25px;flex-wrap:wrap;color:#777;font-size:11px;line-height:1.7}
+.footer-brand{display:flex;align-items:center;gap:12px}
+footer strong{font:800 24px "Barlow Condensed";color:#fff}footer b{color:var(--red)}
+
+.float-wa{position:fixed;z-index:99;right:22px;bottom:22px;width:60px;height:60px;border-radius:50%;background:#25D366;color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 25px rgba(37,211,102,0.45);transition:transform .3s cubic-bezier(0.175, 0.885, 0.32, 1.27), box-shadow .3s ease}
+.float-wa::before{content:'';position:absolute;inset:-6px;border-radius:50%;background:rgba(37,211,102,0.35);z-index:-1;animation:waPulse 2s infinite ease-in-out}
+.float-wa:hover{transform:scale(1.12);box-shadow:0 12px 30px rgba(37,211,102,0.65)}
+.float-wa svg{width:32px;height:32px;fill:#fff}
+@keyframes waPulse{0%{transform:scale(0.9);opacity:0.8}50%{transform:scale(1.15);opacity:0}100%{transform:scale(0.9);opacity:0}}
+
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .8s cubic-bezier(0.16,1,0.3,1), transform .8s cubic-bezier(0.16,1,0.3,1)}
+.reveal.show{opacity:1;transform:translateY(0)}
+
+@media(max-width:850px){
+ .links{display:none;position:absolute;top:100%;left:0;right:0;width:100%;background:rgba(12,12,12,0.98);backdrop-filter:blur(20px);border-bottom:1px solid #222;padding:15px 5%;flex-direction:column;align-items:stretch;gap:0;box-shadow:0 20px 40px rgba(0,0,0,0.9);opacity:0;transform:translateY(-15px);pointer-events:none;transition:all .35s cubic-bezier(0.16,1,0.3,1)}
+ .links.active{display:flex;opacity:1;transform:translateY(0);pointer-events:auto}
+ .links a{padding:16px 10px;border-bottom:1px solid rgba(255,255,255,0.06);font-size:13px;letter-spacing:1.5px}
+ .links a:last-child{border:0}
+ .menu-toggle{display:flex}
+ .nav-cta{display:none}
+ .hero{min-height:88vh}.hero-inner{padding-top:135px}
+ .hero::after{width:70vw;height:70vw;right:-25%;top:25%}
+ .about-grid,.location{grid-template-columns:1fr;gap:30px}
+ .cards{grid-template-columns:1fr 1fr}.card{min-height:240px}.cards .card:last-child{grid-column:span 2}
+ .gallery-grid{grid-template-columns:1fr 1fr}
+ .stats{grid-template-columns:1fr 1fr}
+}
+
+@media(max-width:520px){
+ body{font-size:14px}
+ .logo{font-size:22px;gap:8px}
+ .nav{padding:12px 5%}
+ .hero-inner{padding:120px 0 60px}.hero p{font-size:13px}
+ h1{font-size:58px}.scroll{display:none}
+ section,.training-inner{padding:55px 0}
+ .visual{min-height:300px}.visual-text strong{font-size:42px}.visual::after{font-size:54px}
+ .features{grid-template-columns:1fr 1fr}.feature{padding:14px}.feature strong{font-size:17px}
+ .cards{grid-template-columns:1fr}.cards .card:last-child{grid-column:auto}.card{min-height:220px}
+ .gallery-grid{grid-template-columns:1fr}
+ .stats{grid-template-columns:1fr 1fr}.stat{padding:18px}.stat strong{font-size:38px}
+ .review-box{padding:30px 16px}.rating{font-size:72px}
+ .location .map-wrap,.map-wrap iframe{min-height:300px;height:300px}
+ .cta{padding:70px 5%}
+ footer{display:block}footer div{margin-bottom:15px}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <a class="logo" href="#home">
+    <span>DIAMOND <b>GYM</b></span>
+  </a>
+
+  <div class="links" id="links">
+    <a href="#home">HOME</a>
+    <a href="#about">ABOUT</a>
+    <a href="#training">TRAINING</a>
+    <a href="#gallery">GALLERY</a>
+    <a href="#reviews">REVIEWS</a>
+    <a href="#contact">CONTACT</a>
+  </div>
+
+  <a class="nav-cta" href="https://wa.me/916367676669?text=Namaste%2C%20mujhe%20gym%20membership%20aur%20fitness%20programs%20ki%20jankari%20chahiye." target="_blank" rel="noopener">
+    <!-- SVG WhatsApp Icon inside CTA button -->
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+    WHATSAPP
+  </a>
+
+  <!-- Animated 3-Lines Toggle Button -->
+  <button class="menu-toggle" id="menuToggle" aria-label="Toggle Navigation Menu">
+    <div class="hamburger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </button>
+</nav>
+
+<header class="hero" id="home">
+ <div class="hero-inner reveal">
+   <div class="kicker">UNISEX GYM • STRENGTH • CARDIO • PERSONAL TRAINING</div>
+   <h1>YOUR FITNESS<br><span>YOUR GOALS</span><br>YOUR WAY.</h1>
+   <p>Build strength, improve fitness and work toward your goals in a fully air-conditioned gym in the heart of Barmer.</p>
+   <div class="actions">
+    <a class="btn" href="#contact">CONTACT / VISIT ↗</a>
+    <a class="btn wa-btn" href="https://wa.me/916367676669?text=Namaste%2C%20mujhe%20gym%20membership%20aur%20fitness%20programs%20ki%20jankari%20chahiye." target="_blank" rel="noopener">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+      WHATSAPP
+    </a>
+   </div>
+   <div class="trust"><span class="stars">★★★★★</span><b>4.5</b><span>GYM & FITNESS CENTER</span></div>
+ </div>
+ <div class="scroll">SCROLL ↓</div>
+</header>
+
+<div class="ticker"><div class="ticker-track">
+ <b>GYM</b><i>●</i><b>CARDIO</b><i>●</i><b>CROSSFIT</b><i>●</i><b>FUNCTIONAL TRAINING</b><i>●</i><b>WEIGHT MANAGEMENT</b><i>●</i>
+ <b>GYM</b><i>●</i><b>CARDIO</b><i>●</i><b>CROSSFIT</b><i>●</i><b>FUNCTIONAL TRAINING</b><i>●</i><b>WEIGHT MANAGEMENT</b>
+</div></div>
+
+<section id="about" class="about-grid reveal">
+ <div class="visual">
+   <div class="visual-text"><span>EST. FOR YOUR NEXT LEVEL</span><strong>TRAIN<br><em class="red">HARD.</em></strong></div>
+ </div>
+ <div>
+  <div class="eyebrow">MORE THAN A GYM</div>
+  <h2 class="title">FITNESS<br>FOR EVERY<br><span class="red">GOAL.</span></h2>
+  <p class="muted">A unisex gym and fitness center in Barmer offering strength training, weight management, cardio, CrossFit-style workouts and personal training assistance.</p>
+  <div class="features">
+   <div class="feature"><strong>STRENGTH TRAINING</strong><small>Build strength & fitness</small></div>
+   <div class="feature"><strong>FULLY AIR-CONDITIONED</strong><small>Comfortable training</small></div>
+   <div class="feature"><strong>CLEAN ENVIRONMENT</strong><small>Clean & sanitised space</small></div>
+   <div class="feature"><strong>PERSONAL TRAINING</strong><small>Instructor assistance</small></div>
+  </div>
+ </div>
+</section>
+
+<div class="training" id="training"><div class="training-inner reveal">
+ <div class="eyebrow">FITNESS PROGRAMS</div><h2 class="title">FIND YOUR<br>FITNESS FOCUS.</h2>
+ <div class="cards">
+  <!-- GYM CARD -->
+  <article class="card" style="background-image: url('https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?q=80&w=800&auto=format&fit=crop');">
+   <div class="card-overlay"></div>
+   <div class="card-content">
+     <div class="num">01</div>
+     <h3>GYM</h3>
+     <p>Strength-focused training and modern heavy-duty equipment.</p>
+   </div>
+  </article>
+
+  <!-- CARDIO CARD -->
+  <article class="card" style="background-image: url('https://images.unsplash.com/photo-1538805060514-97d9cc17730c?q=80&w=800&auto=format&fit=crop');">
+   <div class="card-overlay"></div>
+   <div class="card-content">
+     <div class="num">02</div>
+     <h3>CARDIO</h3>
+     <p>Build endurance, stamina, speed and heart conditioning.</p>
+   </div>
+  </article>
+
+  <!-- CROSSFIT CARD -->
+  <article class="card" style="background-image: url('https://images.unsplash.com/photo-1598971639058-fab3c3109a00?q=80&w=800&auto=format&fit=crop');">
+   <div class="card-overlay"></div>
+   <div class="card-content">
+     <div class="num">03</div>
+     <h3>CROSSFIT</h3>
+     <p>Build body control, pull strength, agility and mobility.</p>
+   </div>
+  </article>
+
+  <!-- FUNCTIONAL CARD -->
+  <article class="card" style="background-image: url('https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?q=80&w=800&auto=format&fit=crop');">
+   <div class="card-overlay"></div>
+   <div class="card-content">
+     <div class="num">04</div>
+     <h3>FUNCTIONAL</h3>
+     <p>High-intensity athletic movement, ropes and core strength.</p>
+   </div>
+  </article>
+
+  <!-- WEIGHT MANAGEMENT CARD -->
+  <article class="card" style="background-image: url('https://images.unsplash.com/photo-1518611012118-696072aa579a?q=80&w=800&auto=format&fit=crop');">
+   <div class="card-overlay"></div>
+   <div class="card-content">
+     <div class="num">05</div>
+     <h3>WEIGHT MANAGEMENT</h3>
+     <p>Support your weight goals with a consistent fitness routine.</p>
+   </div>
+  </article>
+ </div>
+</div></div>
+
+<section id="gallery" class="reveal">
+ <div class="eyebrow">INSIDE THE GYM</div>
+ <h2 class="title">YOUR<br><span class="red">GYM SPACE.</span></h2>
+ <div class="gallery-grid">
+  <div class="gallery-item">
+    <img src="https://cdn.phototourl.com/member/2026-10-09-5d7fb844-5d00-4a1d-8801-64a2a25cae06.jpg" alt="Gym interior">
+    <span>STRENGTH TRAINING</span>
+  </div>
+  <div class="gallery-item">
+    <img src="https://cdn.phototourl.com/member/2026-10-09-5d7fb844-5d00-4a1d-8801-64a2a25cae06.jpg" alt="Gym interior">
+    <span>WEIGHT MANAGEMENT</span>
+  </div>
+  <div class="gallery-item">
+    <img src="https://cdn.phototourl.com/member/2026-10-09-5d7fb844-5d00-4a1d-8801-64a2a25cae06.jpg" alt="Gym interior">
+    <span>PERSONAL TRAINING</span>
+  </div>
+  <div class="gallery-item">
+    <img src="https://cdn.phototourl.com/member/2026-10-09-5d7fb844-5d00-4a1d-8801-64a2a25cae06.jpg" alt="Gym interior">
+    <span>CARDIO ZONE</span>
+  </div>
+ </div>
+</section>
+
+<section class="reveal">
+ <div class="eyebrow">FITNESS IN BARMER</div><h2 class="title">YOUR FITNESS<br>STARTS HERE.</h2>
+ <div class="stats">
+  <div class="stat"><strong>4.5 ★</strong><p>Provided rating</p></div>
+  <div class="stat"><strong>AC</strong><p>Air-conditioned</p></div>
+  <div class="stat"><strong>PT</strong><p>Training assistance</p></div>
+  <div class="stat"><strong>100%</strong><p>Fitness focus</p></div>
+ </div>
+</section>
+
+<section id="reviews" class="reveal">
+ <div class="review-box">
+  <div class="eyebrow">GYM RATING</div>
+  <div class="rating">4.5</div>
+  <div class="stars">★★★★★</div>
+  <p>A unisex fitness center with strength training, cardio, weight management and personal training support in a clean, air-conditioned environment.</p>
+  <p style="font-size:10px;color:#666;margin-top:12px">RATING PROVIDED: 4.5 / 5</p>
+ </div>
+</section>
+
+<section id="contact" class="location reveal">
+ <div>
+  <div class="eyebrow">VISIT OUR GYM</div>
+  <h2 class="title">VISIT US IN<br><span class="red">BARMER.</span></h2>
+  <p class="address">4th Floor, Arihant Tower,<br>Opposite Railway Station, Kothwali,<br>Barmer, Rajasthan – 344001</p>
+  <div class="actions">
+   <a class="btn" href="#contact">VISIT THE GYM</a>
+   <a class="btn alt" href="https://www.google.com/maps/dir/?api=1&destination=4th+Floor,+Arihant+Tower,+Opposite+Railway+Station,+Kothwali,+Barmer,+Rajasthan+344001" target="_blank">GET DIRECTIONS ↗</a>
+  </div>
+ </div>
+ <div class="map-wrap">
+  <!-- Live Working Google Maps Embed for Fitness Center Barmer -->
+  <iframe title="Diamond Gym Location" src="https://maps.google.com/maps?q=Arihant+Tower,+Opposite+Railway+Station,+Kothwali,+Barmer,+Rajasthan+344001&z=17&output=embed" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe>
+ </div>
+</section>
+
+<div class="cta">
+ <h2>READY TO<br><span class="red">GET STRONG?</span></h2>
+ <p>Strength training, cardio and personal training support — start your fitness journey today.</p>
+ <div class="actions" style="justify-content:center">
+  <a class="btn wa-btn" href="https://wa.me/916367676669?text=Namaste%2C%20mujhe%20gym%20membership%20aur%20fitness%20programs%20ki%20jankari%20chahiye." target="_blank" rel="noopener">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+    CHAT ON WHATSAPP
+  </a>
+  <a class="btn alt" href="#contact">CONTACT / VISIT ↗</a>
+ </div>
+</div>
+
+<footer>
+ <div class="footer-brand">
+   <div><strong>DIAMOND <b>GYM</b></strong><br>UNISEX GYM & FITNESS CENTER</div>
+ </div>
+ <div>4th Floor, Arihant Tower, Opposite Railway Station,<br>Kothwali, Barmer, Rajasthan 344001</div>
+ <div><a href="#contact">Opposite Barmer Railway Station</a><br>© 2026 Diamond Gym</div>
+</footer>
+
+<a class="float-wa" href="https://wa.me/916367676669?text=Namaste%2C%20mujhe%20gym%20membership%20aur%20fitness%20programs%20ki%20jankari%20chahiye." target="_blank" rel="noopener" aria-label="Chat with the gym on WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+</a>
+
+<script>
+const nav = document.getElementById('nav');
+const menuToggle = document.getElementById('menuToggle');
+const links = document.getElementById('links');
+
+// Sticky header scroll behavior
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 30);
+});
+
+// Animated 3-line menu toggle
+menuToggle.addEventListener('click', () => {
+  const isActive = menuToggle.classList.toggle('active');
+  links.classList.toggle('active', isActive);
+});
+
+// Close menu on clicking link
+links.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => {
+    menuToggle.classList.remove('active');
+    links.classList.remove('active');
+  });
+});
+
+// Close menu on outside click
+document.addEventListener('click', (e) => {
+  if (!nav.contains(e.target) && links.classList.contains('active')) {
+    menuToggle.classList.remove('active');
+    links.classList.remove('active');
+  }
+});
+
+// Smooth Scroll Reveal Animation Observer
+const observerOptions = {
+  root: null,
+  rootMargin: '0px',
+  threshold: 0.12
+};
+
+const revealObserver = new IntersectionObserver((entries, observer) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('show');
+      observer.unobserve(entry.target);
+    }
+  });
+}, observerOptions);
+
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+</script>
+</body>
+</html>
